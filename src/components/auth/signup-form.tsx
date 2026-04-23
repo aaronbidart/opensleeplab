@@ -1,16 +1,18 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
-import { authErrorMessage, establishSession } from "@/lib/auth/client-helpers";
+import { getClientAuth } from "@/lib/firebase/client";
+import {
+  authErrorMessage,
+  consumeGoogleRedirectResult,
+  establishSession,
+  startGoogleSignIn,
+} from "@/lib/auth/client-helpers";
 
 export function SignupForm() {
   const router = useRouter();
@@ -20,12 +22,30 @@ export function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Unlike sleepmax, we do NOT wait for email verification — the user paid
-  // intent is high and we want them at the Stripe page as fast as possible.
-  async function goToCheckout() {
-    router.push("/checkout");
+  async function goTo(dest: "/app" | "/checkout") {
+    router.push(dest);
     router.refresh();
   }
+
+  // Catches the return leg of `signInWithRedirect` on mobile. On cold loads
+  // this is a no-op (no pending result → returns null immediately).
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const dest = await consumeGoogleRedirectResult();
+        if (cancelled || !dest) return;
+        await goTo(dest);
+      } catch (err) {
+        if (cancelled) return;
+        setError(authErrorMessage(err));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleEmailSignup(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,7 +62,7 @@ export function SignupForm() {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const idToken = await cred.user.getIdToken();
       await establishSession(idToken);
-      await goToCheckout();
+      await goTo("/checkout");
     } catch (err) {
       console.error(err);
       setError(authErrorMessage(err));
@@ -54,10 +74,10 @@ export function SignupForm() {
     setError(null);
     setGooglePending(true);
     try {
-      const cred = await signInWithPopup(getClientAuth(), googleProvider);
-      const idToken = await cred.user.getIdToken();
-      await establishSession(idToken);
-      await goToCheckout();
+      const result = await startGoogleSignIn("/checkout");
+      if (result === "redirecting") return; // page is navigating away
+      await establishSession(result.idToken);
+      await goTo("/checkout");
     } catch (err) {
       console.error(err);
       setError(authErrorMessage(err));

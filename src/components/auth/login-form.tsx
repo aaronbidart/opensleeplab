@@ -1,17 +1,19 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { getClientAuth, googleProvider } from "@/lib/firebase/client";
-import { authErrorMessage, establishSession } from "@/lib/auth/client-helpers";
+import { getClientAuth } from "@/lib/firebase/client";
+import {
+  authErrorMessage,
+  consumeGoogleRedirectResult,
+  establishSession,
+  startGoogleSignIn,
+} from "@/lib/auth/client-helpers";
 
 export function LoginForm() {
   const router = useRouter();
@@ -21,10 +23,28 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function redirectIn() {
-    router.push("/app");
+  async function goTo(dest: "/app" | "/checkout") {
+    router.push(dest);
     router.refresh();
   }
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const dest = await consumeGoogleRedirectResult();
+        if (cancelled || !dest) return;
+        await goTo(dest);
+      } catch (err) {
+        if (cancelled) return;
+        setError(authErrorMessage(err));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleEmail(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,7 +55,7 @@ export function LoginForm() {
       const cred = await signInWithEmailAndPassword(auth, email, password);
       const idToken = await cred.user.getIdToken();
       await establishSession(idToken);
-      await redirectIn();
+      await goTo("/app");
     } catch (err) {
       console.error(err);
       setError(authErrorMessage(err));
@@ -48,10 +68,10 @@ export function LoginForm() {
     setError(null);
     setGooglePending(true);
     try {
-      const cred = await signInWithPopup(getClientAuth(), googleProvider);
-      const idToken = await cred.user.getIdToken();
-      await establishSession(idToken);
-      await redirectIn();
+      const result = await startGoogleSignIn("/app");
+      if (result === "redirecting") return; // page is navigating away
+      await establishSession(result.idToken);
+      await goTo("/app");
     } catch (err) {
       console.error(err);
       setError(authErrorMessage(err));
