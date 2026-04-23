@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users can read their own profile. Writes are allow-listed:
+    // the Admin SDK (from our server code) creates the doc and refreshes
+    // profile metadata; the client is only allowed to set the WhatsApp
+    // number fields + a handful of profile fields.
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create: if false; // server-only via Admin SDK
+
+      allow update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly([
+               'whatsappNumber',
+               'whatsappUpdatedAt',
+               'displayName',
+               'email',
+               'photoURL',
+               'lastLoginAt'
+             ]);
+
+      allow delete: if false;
+    }
+
+    // Reserved for future webhook idempotency. Server-only.
+    match /processedStripeEvents/{eventId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
