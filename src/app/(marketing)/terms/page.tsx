@@ -32,7 +32,7 @@ export default function TermsPage() {
           2. Purchase and refunds
         </h2>
         <p>
-          The test is a one-time USD $490 purchase that covers the device,
+          The test is a one-time USD $500 purchase that covers the device,
           shipping, data analysis, report, and a consult call. Refund policy
           details are provided in your receipt and by emailing{" "}
           <a

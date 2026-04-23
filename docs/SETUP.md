@@ -75,7 +75,7 @@ Google sign-in silently fails from any domain not on this list, so don't skip it
 1. Stripe Dashboard → **Test mode** (toggle top-right).
 2. Products → **Add product**.
    - Name: `OpenSleepLab 3-Night Sleep Test`
-   - Pricing: **One-time**, **$490.00 USD**
+   - Pricing: **One-time**, **$500.00 USD**
 3. On the product page → **Create payment link**.
    - Collect customer email: **on**
    - After payment → **Don't show confirmation page, redirect customers to your website** → URL: `https://opensleeplab.com/app` (use `http://localhost:3000/app` for testing)
@@ -183,7 +183,7 @@ Expected flow:
 
 - `/` renders the landing page with a **Get your test** header CTA + pricing card.
 - `/signup` takes email+password or Google; on success you land on `/checkout`.
-- `/checkout` shows the $490 summary and a **Pay $490 with Stripe** button that opens the Payment Link (with your email prefilled).
+- `/checkout` shows the $500 summary and a **Pay $500 with Stripe** button that opens the Payment Link (with your email prefilled).
 - Complete the payment with a Stripe test card (`4242 4242 4242 4242`, any future date, any CVC, any ZIP). Stripe redirects to `/app` (as configured in the Payment Link).
 - On `/app`: logout in the header, WhatsApp form in the body. Entering `+15551234567` and saving should show "Saved.".
 

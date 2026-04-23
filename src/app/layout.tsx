@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://opensleeplab.com"),
   openGraph: {
     title: "OpenSleepLab",
-    description: "A 3-night, at-home sleep test. $490.",
+    description: "A 3-night, at-home sleep test. $500.",
     url: "https://opensleeplab.com",
     siteName: "OpenSleepLab",
     type: "website",

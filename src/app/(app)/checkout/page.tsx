@@ -50,7 +50,7 @@ export default async function CheckoutPage() {
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-semibold tracking-tight">
-                $490
+                $500
               </span>
               <span className="text-xs text-muted-foreground">USD</span>
             </div>
@@ -78,7 +78,7 @@ export default async function CheckoutPage() {
               href={payUrl}
               className={cn(buttonVariants({ size: "lg" }), "w-full")}
             >
-              Pay $490 with Stripe
+              Pay $500 with Stripe
             </a>
           ) : (
             <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">

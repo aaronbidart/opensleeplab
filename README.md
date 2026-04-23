@@ -1,6 +1,6 @@
 # OpenSleepLab
 
-Landing + signup + paywall for a 3-night at-home sleep test. USD $490, one-time.
+Landing + signup + paywall for a 3-night at-home sleep test. USD $500, one-time.
 
 ## Stack
 
@@ -18,7 +18,7 @@ Landing + signup + paywall for a 3-night at-home sleep test. USD $490, one-time.
   ↓ "Get your test" / "Sign up"
 /signup                 email+password or Google (no email-verification wait)
   ↓ on success → establishSession()
-/checkout               offering summary + "Pay $490 with Stripe" button
+/checkout               offering summary + "Pay $500 with Stripe" button
                         → hosted Stripe Payment Link (new tab or full redirect)
 [Stripe]
   ↓ after payment, Stripe redirects back to NEXT_PUBLIC_APP_URL/app

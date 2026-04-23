@@ -22,7 +22,7 @@ function Hero() {
       />
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-6 pb-20 pt-24 text-center sm:pt-28">
         <span className="rounded-full border border-border/70 bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-          At-home · 3 nights · USD $490
+          At-home · 3 nights · USD $500
         </span>
         <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
           A proper sleep test, at home.
@@ -36,7 +36,7 @@ function Hero() {
             href="/signup"
             className={cn(buttonVariants({ size: "lg" }))}
           >
-            Get your test — $490
+            Get your test — $500
           </Link>
           <Link
             href="#how-it-works"
@@ -168,7 +168,7 @@ function PricingCTA() {
             One-time · Everything included
           </span>
           <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-semibold tracking-tight">$490</span>
+            <span className="text-5xl font-semibold tracking-tight">$500</span>
             <span className="text-sm text-muted-foreground">USD</span>
           </div>
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -181,7 +181,7 @@ function PricingCTA() {
             href="/signup"
             className={cn(buttonVariants({ size: "lg" }), "mt-2")}
           >
-            Get your test — $490
+            Get your test — $500
           </Link>
           <p className="mt-1 text-xs text-muted-foreground">
             Secure payment powered by Stripe.
