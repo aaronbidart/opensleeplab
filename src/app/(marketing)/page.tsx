@@ -1,19 +1,52 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getPaymentLinkUrl } from "@/lib/stripe/payment-link";
 
 export default function LandingPage() {
+  const payUrl = getPaymentLinkUrl();
+
   return (
     <main className="flex flex-1 flex-col">
-      <Hero />
+      <Hero payUrl={payUrl} />
       <WhatsIncluded />
       <HowItWorks />
-      <PricingCTA />
+      <PricingCTA payUrl={payUrl} />
     </main>
   );
 }
 
-function Hero() {
+function BuyButton({
+  payUrl,
+  className,
+}: {
+  payUrl: string | null;
+  className?: string;
+}) {
+  if (!payUrl) {
+    return (
+      <span
+        className={cn(
+          buttonVariants({ size: "lg" }),
+          "pointer-events-none opacity-50",
+          className,
+        )}
+      >
+        Payment link unavailable
+      </span>
+    );
+  }
+  return (
+    <a
+      href={payUrl}
+      className={cn(buttonVariants({ size: "lg" }), className)}
+    >
+      Get your test — $500
+    </a>
+  );
+}
+
+function Hero({ payUrl }: { payUrl: string | null }) {
   return (
     <section className="relative overflow-hidden border-b border-border/60">
       <div
@@ -32,12 +65,7 @@ function Hero() {
           person to walk you through what it means.
         </p>
         <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/signup"
-            className={cn(buttonVariants({ size: "lg" }))}
-          >
-            Get your test — $500
-          </Link>
+          <BuyButton payUrl={payUrl} />
           <Link
             href="#how-it-works"
             className={cn(buttonVariants({ size: "lg", variant: "outline" }))}
@@ -155,7 +183,7 @@ function HowItWorks() {
   );
 }
 
-function PricingCTA() {
+function PricingCTA({ payUrl }: { payUrl: string | null }) {
   return (
     <section>
       <div className="mx-auto flex w-full max-w-3xl px-6 py-20">
@@ -173,12 +201,7 @@ function PricingCTA() {
           <p className="max-w-lg text-muted-foreground">
             No subscription. No add-ons. Pay once, sleep, get answers.
           </p>
-          <Link
-            href="/signup"
-            className={cn(buttonVariants({ size: "lg" }), "mt-2")}
-          >
-            Get your test — $500
-          </Link>
+          <BuyButton payUrl={payUrl} className="mt-2" />
           <p className="mt-1 text-xs text-muted-foreground">
             Secure payment powered by Stripe.
           </p>
