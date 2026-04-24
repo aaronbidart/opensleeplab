@@ -22,10 +22,10 @@ export default function TermsPage() {
           1. What OpenSleepLab is
         </h2>
         <p>
-          OpenSleepLab offers an at-home sleep test. It is not a substitute
-          for in-lab polysomnography or for evaluation and treatment by a
-          licensed clinician when one is medically indicated. If you have
-          symptoms of a serious sleep disorder, see a physician.
+          OpenSleepLab offers an at-home sleep test. The service is
+          informational and is not a replacement for evaluation or treatment
+          by a licensed clinician. If you have symptoms of a serious sleep
+          disorder, see a physician.
         </p>
 
         <h2 className="mt-6 text-lg font-semibold text-foreground">

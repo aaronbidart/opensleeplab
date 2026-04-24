@@ -29,7 +29,7 @@ function Hero() {
         </h1>
         <p className="max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
           Three nights of clinical-grade monitoring, a clean report, and a real
-          person to walk you through what it means — no clinic waiting list.
+          person to walk you through what it means.
         </p>
         <div className="mt-2 flex flex-col gap-3 sm:flex-row">
           <Link
@@ -45,10 +45,6 @@ function Hero() {
             How it works
           </Link>
         </div>
-        <p className="mt-6 max-w-md text-xs text-muted-foreground">
-          Not a substitute for in-lab polysomnography when one is medically
-          indicated.
-        </p>
       </div>
     </section>
   );
@@ -61,11 +57,11 @@ const INCLUDED = [
   },
   {
     title: "Clinical-grade sensors",
-    body: "Pulse oximetry, actigraphy, and breathing — calibrated, not guessed.",
+    body: "EEG, EOG, heart rate, breathing, airflow, SpO₂, movement, temperature, and sound — the same signals a lab captures.",
   },
   {
     title: "Report + consult",
-    body: "A plain-language report and a short call to walk through what it means for you.",
+    body: "A plain-language report and a call to walk through what it means for you.",
   },
   {
     title: "WhatsApp support",
@@ -110,17 +106,17 @@ const STEPS = [
   {
     step: "01",
     title: "Order your test",
-    body: "Sign up, pay, and share a shipping address. Device ships within 2 business days.",
+    body: "Sign up, pay, and choose what you want to measure across your three nights.",
   },
   {
     step: "02",
     title: "Wear it for 3 nights",
-    body: "Clip it on before bed. No wires, no clinic. Takes 30 seconds to set up each night.",
+    body: "A few minutes to set up each night. No wires, no clinic.",
   },
   {
     step: "03",
     title: "Get your report",
-    body: "We turn the data around in a week and book a 20-minute call to walk through it.",
+    body: "We turn the data into a plain-language report and book a call to walk through it.",
   },
 ];
 

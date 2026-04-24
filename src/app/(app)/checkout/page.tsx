@@ -13,8 +13,8 @@ export const metadata = {
 
 const INCLUDED = [
   "3 nights of at-home monitoring",
-  "Clinical-grade sensors, shipped to you",
-  "Report + 20-minute consult",
+  "Clinical-grade sensors",
+  "Plain-language report + consult",
   "Support by WhatsApp during your test",
 ];
 
