@@ -213,6 +213,19 @@ Create a private repo (`opensleeplab`) and push. `.gitignore` already protects `
 
 After the domain resolves, return to Firebase → Authentication → Settings → Authorized domains and confirm `opensleeplab.com`, `www.opensleeplab.com`, and the Vercel preview subdomain are all listed.
 
+### 6d.2. Self-host the Firebase auth handler (required for mobile Google sign-in)
+
+`signInWithRedirect()` on iOS Safari and strict-ITP browsers silently fails when the app's domain (`opensleeplab.com`) differs from Firebase's `authDomain` (`opensleeplab.firebaseapp.com`), because the return leg has to read a cookie cross-origin. The fix is to self-host the auth handler under our own domain.
+
+Two things:
+
+1. `next.config.ts` already contains rewrites that proxy `/__/auth/*` and `/__/firebase/*` from `opensleeplab.com` to `opensleeplab.firebaseapp.com`. Nothing to do — shipped with the repo.
+2. **In Vercel → Settings → Environment Variables, set `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` to `opensleeplab.com`** (not the `.firebaseapp.com` value). Apply to Production (and Preview if you want Google sign-in on preview deployments to work too — Preview URLs would each need to be added to Firebase Authorized Domains, which gets tedious, so it's fine to leave Preview using the firebaseapp.com value).
+
+Keep `.env.local` unchanged — local dev is fine using `opensleeplab.firebaseapp.com` because localhost doesn't trigger ITP.
+
+Ref: <https://firebase.google.com/docs/auth/web/redirect-best-practices>
+
 ### 6e. Update the Stripe Payment Link redirect
 
 Back in the Stripe dashboard, edit the Payment Link's after-payment redirect URL from `http://localhost:3000/app` to `https://opensleeplab.com/app`.
