@@ -32,14 +32,15 @@ export default function TermsPage() {
           2. Purchase and refunds
         </h2>
         <p>
-          The test is a one-time USD $500 purchase that covers the device,
-          shipping, data analysis, report, and a consult call. Refund policy
-          details are provided in your receipt and by emailing{" "}
+          Pricing is quoted on a per-customer basis and depends on what you
+          want to measure. Each plan covers the device, shipping, data
+          analysis, a written report, and a consult call. Refund policy
+          details are confirmed before payment and by emailing{" "}
           <a
-            href="mailto:support@opensleeplab.com"
+            href="mailto:aaron@opensleeplab.com"
             className="underline underline-offset-2 hover:text-foreground"
           >
-            support@opensleeplab.com
+            aaron@opensleeplab.com
           </a>
           .
         </p>
@@ -77,10 +78,10 @@ export default function TermsPage() {
         <p>
           Questions about these terms:{" "}
           <a
-            href="mailto:support@opensleeplab.com"
+            href="mailto:aaron@opensleeplab.com"
             className="underline underline-offset-2 hover:text-foreground"
           >
-            support@opensleeplab.com
+            aaron@opensleeplab.com
           </a>
           .
         </p>

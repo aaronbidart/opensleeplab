@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { getPaymentLinkUrl } from "@/lib/stripe/payment-link";
+import { LeadInquiryButton } from "@/components/marketing/lead-form-dialog";
 
 export default function MarketingLayout({
   children,
@@ -18,8 +16,6 @@ export default function MarketingLayout({
 }
 
 function MarketingHeader() {
-  const payUrl = getPaymentLinkUrl();
-
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-6">
@@ -29,11 +25,9 @@ function MarketingHeader() {
         >
           OpenSleepLab
         </Link>
-        {payUrl ? (
-          <a href={payUrl} className={cn(buttonVariants({ size: "sm" }))}>
-            Get your test
-          </a>
-        ) : null}
+        <LeadInquiryButton source="header" size="sm">
+          Get in touch
+        </LeadInquiryButton>
       </div>
     </header>
   );

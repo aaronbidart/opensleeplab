@@ -19,10 +19,10 @@ export default function AppThanksPage() {
         <p className="text-sm text-muted-foreground">
           Questions in the meantime:{" "}
           <a
-            href="mailto:support@opensleeplab.com"
+            href="mailto:aaron@opensleeplab.com"
             className="font-medium text-foreground underline underline-offset-2 hover:text-foreground/80"
           >
-            support@opensleeplab.com
+            aaron@opensleeplab.com
           </a>
         </p>
         <Link

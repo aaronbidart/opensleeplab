@@ -91,10 +91,10 @@ export default function PrivacyPage() {
         <p>
           Questions or requests:{" "}
           <a
-            href="mailto:support@opensleeplab.com"
+            href="mailto:aaron@opensleeplab.com"
             className="underline underline-offset-2 hover:text-foreground"
           >
-            support@opensleeplab.com
+            aaron@opensleeplab.com
           </a>
           .
         </p>

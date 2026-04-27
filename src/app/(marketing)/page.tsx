@@ -1,52 +1,20 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getPaymentLinkUrl } from "@/lib/stripe/payment-link";
+import { LeadInquiryButton } from "@/components/marketing/lead-form-dialog";
 
 export default function LandingPage() {
-  const payUrl = getPaymentLinkUrl();
-
   return (
     <main className="flex flex-1 flex-col">
-      <Hero payUrl={payUrl} />
+      <Hero />
       <WhatsIncluded />
       <HowItWorks />
-      <PricingCTA payUrl={payUrl} />
+      <PricingCTA />
     </main>
   );
 }
 
-function BuyButton({
-  payUrl,
-  className,
-}: {
-  payUrl: string | null;
-  className?: string;
-}) {
-  if (!payUrl) {
-    return (
-      <span
-        className={cn(
-          buttonVariants({ size: "lg" }),
-          "pointer-events-none opacity-50",
-          className,
-        )}
-      >
-        Payment link unavailable
-      </span>
-    );
-  }
-  return (
-    <a
-      href={payUrl}
-      className={cn(buttonVariants({ size: "lg" }), className)}
-    >
-      Get your test — $500
-    </a>
-  );
-}
-
-function Hero({ payUrl }: { payUrl: string | null }) {
+function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border/60">
       <div
@@ -55,17 +23,18 @@ function Hero({ payUrl }: { payUrl: string | null }) {
       />
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-6 pb-20 pt-24 text-center sm:pt-28">
         <span className="rounded-full border border-border/70 bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-          At-home · 3 nights · USD $500
+          At-home · multi-night · custom plan
         </span>
         <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-          A proper sleep test, at home.
+          Measure your sleep. Then make it better.
         </h1>
         <p className="max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
-          Three nights of clinical-grade monitoring, a clean report, and a real
-          person to walk you through what it means.
+          Multi-night clinical-grade monitoring, a clean report, and a
+          personalized protocol. Built for deeper recovery, sharper days, or
+          whatever you&rsquo;re trying to fix.
         </p>
         <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-          <BuyButton payUrl={payUrl} />
+          <LeadInquiryButton source="hero">Get in touch</LeadInquiryButton>
           <Link
             href="#how-it-works"
             className={cn(buttonVariants({ size: "lg", variant: "outline" }))}
@@ -80,20 +49,20 @@ function Hero({ payUrl }: { payUrl: string | null }) {
 
 const INCLUDED = [
   {
-    title: "3 nights of monitoring",
-    body: "One night is noise. Three nights gives us a signal you can act on.",
+    title: "Multi-night monitoring",
+    body: "One night is noise. A few nights gives us a signal you can act on.",
   },
   {
-    title: "Clinical-grade sensors",
-    body: "EEG, EOG, heart rate, breathing, airflow, SpO₂, movement, temperature, and sound — the same signals a lab captures.",
+    title: "Lab-quality, at home",
+    body: "The same signals a sleep lab captures — without the wires, the clinic, or the cost. We can also cross-check against your Apple Watch, Whoop, Oura, or Fitbit so you finally know what those numbers mean.",
   },
   {
-    title: "Report + consult",
-    body: "A plain-language report and a call to walk through what it means for you.",
+    title: "Plain-language report",
+    body: "What we found and what it means, written in language that doesn’t require a medical degree. Plus a call to walk through it together.",
   },
   {
-    title: "WhatsApp support",
-    body: "A direct line to a real human while the device is at your door.",
+    title: "Personalized protocol",
+    body: "Concrete recommendations across exercise, supplements, and lifestyle — built around the data and what you’re trying to improve.",
   },
 ];
 
@@ -106,8 +75,10 @@ function WhatsIncluded() {
             What&rsquo;s included
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Everything you need to understand your sleep — nothing you
-            don&rsquo;t.
+            Everything you need to understand your sleep — and improve it.
+            Whether you&rsquo;re an athlete chasing deeper sleep for recovery,
+            an entrepreneur after sharper REM, or just tired of falling asleep
+            at 2am.
           </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
@@ -133,18 +104,18 @@ function WhatsIncluded() {
 const STEPS = [
   {
     step: "01",
-    title: "Order your test",
-    body: "Sign up, pay, and choose what you want to measure across your three nights.",
+    title: "Tell us about you",
+    body: "Share your details and message us on WhatsApp. We'll figure out together what you want to measure and what you want to improve.",
   },
   {
     step: "02",
-    title: "Wear it for 3 nights",
+    title: "Wear it for a few nights",
     body: "A few minutes to set up each night. No wires, no clinic.",
   },
   {
     step: "03",
-    title: "Get your report",
-    body: "We turn the data into a plain-language report and book a call to walk through it.",
+    title: "Get your report + protocol",
+    body: "Plain-language results, a personalized protocol to act on, and a call to walk through it.",
   },
 ];
 
@@ -157,7 +128,8 @@ function HowItWorks() {
             How it works
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Three steps. No clinic visit. Results you can actually read.
+            Three steps. No clinic visit. Results you can actually read and
+            act on.
           </p>
         </div>
         <ol className="grid gap-6 sm:grid-cols-3">
@@ -183,28 +155,25 @@ function HowItWorks() {
   );
 }
 
-function PricingCTA({ payUrl }: { payUrl: string | null }) {
+function PricingCTA() {
   return (
     <section>
       <div className="mx-auto flex w-full max-w-3xl px-6 py-20">
         <div className="flex w-full flex-col items-center gap-6 rounded-2xl border border-border/70 bg-card p-8 text-center sm:p-12">
           <span className="rounded-full border border-border/70 bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-            One-time · Everything included
+            Custom · Built around what you want to improve
           </span>
-          <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-semibold tracking-tight">$500</span>
-            <span className="text-sm text-muted-foreground">USD</span>
-          </div>
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            3 nights. Shipping, report, and consult — included.
+            Every test is a little different.
           </h2>
           <p className="max-w-lg text-muted-foreground">
-            No subscription. No add-ons. Pay once, sleep, get answers.
+            Tell us what you&rsquo;re trying to figure out, whether
+            that&rsquo;s better recovery, faster sleep onset, or sharper days.
+            We&rsquo;ll talk it through one-on-one and quote a plan that fits.
           </p>
-          <BuyButton payUrl={payUrl} className="mt-2" />
-          <p className="mt-1 text-xs text-muted-foreground">
-            Secure payment powered by Stripe.
-          </p>
+          <LeadInquiryButton source="pricing-cta" className="mt-2">
+            Get in touch
+          </LeadInquiryButton>
         </div>
       </div>
     </section>
